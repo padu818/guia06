@@ -53,10 +53,9 @@ public class Curso {
 		log.registrar(this, "inscribir ",a.toString());
 		return true;
 		}catch (Exception e) {
-		//System.out.println (“Error: ” + e.getMessage);
-		//	e.printStackTrace();
-			return false;
+			System.out.println("Error al inscribir" + e.getMessage());
 		}
+		return false;
 	}
 	
 	
@@ -65,12 +64,99 @@ public class Curso {
 	 */
 	public void imprimirInscriptos() {
 		try {
-		log.registrar(this, "imprimir listado",this.inscriptos.size()+ " registros ");
+			log.registrar(this, "imprimir listado",this.inscriptos.size()+ " registros ");
 		}catch(Exception e) {
-			//System.out.println (“Error: ” + e.getMessage);
-			//	e.printStackTrace();
+			System.out.println ("Error al inscribir" + e.getMessage());
 		}
 	}
+	
+	
+	
+	
+	//get and set
+	public Integer getId() {
+		return id;
+	}
+
+
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+
+
+	public String getNombre() {
+		return nombre;
+	}
+
+
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+
+
+
+	public Integer getCupo() {
+		return cupo;
+	}
+
+
+
+	public void setCupo(Integer cupo) {
+		this.cupo = cupo;
+	}
+
+
+
+	public List<Alumno> getInscriptos() {
+		return inscriptos;
+	}
+
+
+
+	public void setInscriptos(List<Alumno> inscriptos) {
+		this.inscriptos = inscriptos;
+	}
+
+
+
+	public Integer getCreditos() {
+		return creditos;
+	}
+
+
+
+	public void setCreditos(Integer creditos) {
+		this.creditos = creditos;
+	}
+
+
+
+	public Integer getCreditosRequeridos() {
+		return creditosRequeridos;
+	}
+
+
+
+	public void setCreditosRequeridos(Integer creditosRequeridos) {
+		this.creditosRequeridos = creditosRequeridos;
+	}
+
+
+
+	public Registro getLog() {
+		return log;
+	}
+
+
+
+	public void setLog(Registro log) {
+		this.log = log;
+	}
+
+
 
 
 }
