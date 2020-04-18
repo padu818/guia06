@@ -29,12 +29,8 @@ public class Curso {
 	public Curso() {
 		super();
 		this.inscriptos = new ArrayList<Alumno>();
-		try {
 		this.log = new Registro();
-		}catch (Exception e) {
-			//System.out.println (“Error: ” + e.getMessage);
-			e.printStackTrace();
-		}
+
 	}
 	
 	
@@ -53,8 +49,14 @@ public class Curso {
 	 * @return
 	 */
 	public Boolean inscribir(Alumno a) {
+		try {
 		log.registrar(this, "inscribir ",a.toString());
-		return false;
+		return true;
+		}catch (Exception e) {
+		//System.out.println (“Error: ” + e.getMessage);
+		//	e.printStackTrace();
+			return false;
+		}
 	}
 	
 	
@@ -62,7 +64,12 @@ public class Curso {
 	 * imprime los inscriptos en orden alfabetico
 	 */
 	public void imprimirInscriptos() {
+		try {
 		log.registrar(this, "imprimir listado",this.inscriptos.size()+ " registros ");
+		}catch(Exception e) {
+			//System.out.println (“Error: ” + e.getMessage);
+			//	e.printStackTrace();
+		}
 	}
 
 
