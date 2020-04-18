@@ -51,7 +51,6 @@ public class Curso {
 	public Boolean inscribir(Alumno a) {
 		try {
 		log.registrar(this, "inscribir ",a.toString());
-		return true;
 		}catch (Exception e) {
 			System.out.println("Error al inscribir" + e.getMessage());
 		}

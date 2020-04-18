@@ -27,11 +27,11 @@ public class Alumno {
 	}
 
 	public int creditosObtenidos() {
-		int creditos = 0;
-		for(Curso cursos: this.getAprobados() ) {
-			creditos += cursos.getCreditos();
-		}
+		Integer creditos = 0;	
 		
+		for (Curso c : aprobados) {
+			creditos += c.getCreditos();
+		}
 		return creditos;
 	}
 
