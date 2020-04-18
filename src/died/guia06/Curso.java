@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.junit.runners.Parameterized.Parameter;
 
 import died.guia06.util.Registro;
 
@@ -34,7 +35,23 @@ public class Curso {
 		this.log = new Registro();
 
 	}
-	
+	/**
+	@param codigo id de la clase
+	@param cicloL Ciclo electivo de la clase
+	@param cup Cupo de alumnos permitidos
+	@param credit Cantidad creditos del curso
+	@param creditosReq Creditos necesarios para poder cursarla
+	*/
+	public Curso(Integer codigo, Integer cicloL,Integer cup, Integer credit, Integer creditosReq) {
+		super();
+		this.inscriptos = new ArrayList<Alumno>();
+		this.log = new Registro();
+		id=codigo;
+		cicloLectivo= cicloL;
+		cupo = cup;
+		creditos = credit;
+		creditosRequeridos = creditosReq;
+	}
 	
 
 	/**
@@ -76,6 +93,7 @@ public class Curso {
 			}
 			if(validarMateriaAprobada == false || validarMateriaIncripta == false || validarCupos == false || validarCreditosRequeridos == false) {
 				log.registrar(this, "inscribir ",a.toString());
+				a.inscripcionAceptada(this);
 				return true; //debido a que se pudo inscribir en materia
 			}
 			//no escribo ningun mensaje para luego realizar un mensaje detallado de todos los posibles errores.
