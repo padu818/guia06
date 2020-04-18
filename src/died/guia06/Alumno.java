@@ -1,5 +1,6 @@
 package died.guia06;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -9,6 +10,21 @@ public class Alumno {
 	private Integer nroLibreta;
 	private List<Curso> cursando;
 	private List<Curso> aprobados;
+	
+	
+	public Alumno() {
+		super();
+		aprobados = new ArrayList<Curso>();
+		cursando = new ArrayList<Curso>();
+	}
+	
+	public Alumno(String nombr, Integer nroLib) {
+		super();
+		aprobados = new ArrayList<Curso>();
+		cursando = new ArrayList<Curso>();
+		nombre = nombr;
+		nroLibreta = nroLib;
+	}
 
 	public int creditosObtenidos() {
 		int creditos = 0;
@@ -30,11 +46,6 @@ public class Alumno {
 		this.getCursando().add(c);
 	}
 	
-	/*
-	- Implementar el método equals, estableciendo que 2 alumnos son iguales si tienen el mismo número de libreta universitaria.
-	- Implementar la interface comparable, estableciendo que la comparación de 2 alumnos se hace alfabéticamente por el atributo nombre.
-	- Además, puede crear otros métodos que considere necesarios (getters / setters / constructores).
-	 */
 	
 	
 	//no es necesario comparar clases debido a que es un metodo de la clase ALUMNO y porque el parametro solo permite del mismo tipo.
