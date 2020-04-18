@@ -3,6 +3,7 @@ package died.guia06;
 import java.util.ArrayList;
 import java.util.List;
 
+
 import died.guia06.util.Registro;
 
 /**
@@ -28,8 +29,14 @@ public class Curso {
 	public Curso() {
 		super();
 		this.inscriptos = new ArrayList<Alumno>();
+		try {
 		this.log = new Registro();
+		}catch (Exception e) {
+			//System.out.println (“Error: ” + e.getMessage);
+			e.printStackTrace();
+		}
 	}
+	
 	
 
 	/**
