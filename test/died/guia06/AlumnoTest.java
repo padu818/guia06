@@ -17,11 +17,11 @@ class AlumnoTest {
 		c3 = new Curso();
 		c4 = new Curso();
 		c5 = new Curso();
-		c1.setId(1);c1.setCreditos(6);
-		c2.setId(2);c2.setCreditos(6);
-		c3.setId(3);c3.setCreditos(3);
-		c4.setId(4);c4.setCreditos(6);
-		c5.setId(5);c5.setCreditos(3);
+		c1.setId(1);c1.setCreditos(6);c1.setCicloLectivo(1);
+		c2.setId(2);c2.setCreditos(6);c2.setCicloLectivo(1);
+		c3.setId(3);c3.setCreditos(3);c3.setCicloLectivo(2);
+		c4.setId(4);c4.setCreditos(6);c4.setCicloLectivo(2);
+		c5.setId(5);c5.setCreditos(3);c5.setCicloLectivo(1);
 		a1.getCursando().add(c1);
 		a1.getCursando().add(c2);
 		a1.getCursando().add(c3);
@@ -56,6 +56,15 @@ class AlumnoTest {
 		Integer esperado = 4;
 		a1.inscripcionAceptada(c4);
 		assertEquals(esperado, a1.getCursando().size());
+	}
+	
+	
+	@Test
+	void testCantidadIncripcionesEnDeterminadoCiclo() {
+		Integer esperadoCicloElectivo1 = 2;
+		Integer esperadoCicloElectivo2 = 1;
+		assertEquals(esperadoCicloElectivo1,a1.cantidadCursoEnCicloElectivo(1));
+		assertEquals(esperadoCicloElectivo2,a1.cantidadCursoEnCicloElectivo(2));
 	}
 
 }

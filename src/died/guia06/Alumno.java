@@ -26,7 +26,7 @@ public class Alumno {
 		nroLibreta = nroLib;
 	}
 
-	public int creditosObtenidos() {
+	public Integer creditosObtenidos() {
 		Integer creditos = 0;	
 		
 		for (Curso c : aprobados) {
@@ -47,6 +47,16 @@ public class Alumno {
 	}
 	
 	
+	//metodo creado para simplificar el metodo incribir de la clase CURSO
+	public Integer cantidadCursoEnCicloElectivo(Integer ciclo) {
+		Integer valor = 0;
+		for(Curso c: cursando) {
+			if(c.getCicloLectivo() == ciclo) {
+				valor++;
+			}
+		}
+		return valor;
+	}
 	
 	//no es necesario comparar clases debido a que es un metodo de la clase ALUMNO y porque el parametro solo permite del mismo tipo.
 	public Boolean equals(Alumno a) {

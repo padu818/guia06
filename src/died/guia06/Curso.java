@@ -1,10 +1,12 @@
 package died.guia06;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 
 import died.guia06.util.Registro;
+
 
 /**
  * Clase que representa un curso. Un curso se identifica por su ID y por su nombre y ciclo lectivo.
@@ -48,9 +50,36 @@ public class Curso {
 	 * @param a
 	 * @return
 	 */
+	
+
 	public Boolean inscribir(Alumno a) {
 		try {
-		log.registrar(this, "inscribir ",a.toString());
+			Boolean validarCreditosRequeridos = false;
+			Boolean validarCupos =false;
+			Boolean validarMateriaAprobada = false;
+			Boolean validarMateriaIncripta = false;
+
+			if(creditosRequeridos > a.creditosObtenidos()) {
+				validarCreditosRequeridos = true;
+			}
+			if(this.getInscriptos().size() >= cupo) {
+				validarCupos = true;
+			}
+
+			for(Curso c: a.getAprobados()) {
+				if(c.getId() == this.getId())
+					validarMateriaAprobada = true;
+			}
+			for(Curso c: a.getCursando()) {
+				if(c.getId() == this.getId())
+					validarMateriaIncripta = true;
+			}
+			if(validarMateriaAprobada == false || validarMateriaIncripta == false || validarCupos == false || validarCreditosRequeridos == false) {
+				log.registrar(this, "inscribir ",a.toString());
+				return true; //debido a que se pudo inscribir en materia
+			}
+			//no escribo ningun mensaje para luego realizar un mensaje detallado de todos los posibles errores.
+			//debido a no saber si a la hora de inscribirse a una materia no permiten que se inscriban en una materia ya aprobada o que esta incripto, decidi poner los metodos de validacion.
 		}catch (Exception e) {
 			System.out.println("Error al inscribir" + e.getMessage());
 		}
@@ -59,10 +88,26 @@ public class Curso {
 	
 	
 	/**
-	 * imprime los inscriptos en orden alfabetico
+	 * 
+	 * Imprimir un curso: se debe poder imprimir el listado de inscriptos ordenados alfabéticamente, 
+	por numero de libreta universitaria, o por cantidad de créditos obtenidos.
 	 */
-	public void imprimirInscriptos() {
+	public void imprimirInscriptos(Integer opcion) {
 		try {
+			switch(opcion) {
+			case 1:{	Collections.sort(this.inscriptos, (s1,s2)-> s1.getNroLibreta().compareTo(s2.getNroLibreta()));
+						System.out.println(this.inscriptos);
+						break;
+			}
+			case 2:{
+						Collections.sort(this.inscriptos, (s1,s2)-> s1.creditosObtenidos().compareTo(s2.creditosObtenidos()));
+						System.out.println(this.inscriptos);
+						break;
+			}
+			default:{ Collections.sort(this.inscriptos, new ComparaAlumnosPorNombre());
+					System.out.println(this.inscriptos);}
+			}
+//			
 			log.registrar(this, "imprimir listado",this.inscriptos.size()+ " registros ");
 		}catch(Exception e) {
 			System.out.println ("Error al inscribir" + e.getMessage());
@@ -70,11 +115,21 @@ public class Curso {
 	}
 	
 	
-	
+	//
 	
 	//get and set
 	public Integer getId() {
 		return id;
+	}
+	
+	public Integer getCicloLectivo() {
+		return cicloLectivo;
+	}
+
+
+
+	public void setCicloLectivo(Integer cicloLectivo) {
+		this.cicloLectivo = cicloLectivo;
 	}
 
 
