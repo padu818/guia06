@@ -1,10 +1,12 @@
 package died.guia06;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
 import org.junit.runners.Parameterized.Parameter;
+
 
 import died.guia06.util.Registro;
 
@@ -72,10 +74,15 @@ public class Curso {
 	public Boolean inscribir(Alumno a) {
 		try {
 			Boolean validarCreditosRequeridos = false;
-			Boolean validarCupos =false;
+			Boolean validarCupos = false; 
 			Boolean validarMateriaAprobada = false;
 			Boolean validarMateriaIncripta = false;
-
+			Boolean validarCursosMismoCiclo = false;
+			
+			if(a.cantidadCursoEnCicloElectivo(this.getCicloLectivo()) >= 3) {
+				validarCursosMismoCiclo = true;
+			}
+			
 			if(creditosRequeridos > a.creditosObtenidos()) {
 				validarCreditosRequeridos = true;
 			}
@@ -91,13 +98,13 @@ public class Curso {
 				if(c.getId() == this.getId())
 					validarMateriaIncripta = true;
 			}
-			if(validarMateriaAprobada == false || validarMateriaIncripta == false || validarCupos == false || validarCreditosRequeridos == false) {
-				log.registrar(this, "inscribir ",a.toString());
+			if(validarMateriaAprobada == false && validarCursosMismoCiclo == false && validarMateriaIncripta == false && validarCupos == false && validarCreditosRequeridos == false) {
+				inscriptos.add(a);
 				a.inscripcionAceptada(this);
+				log.registrar(this, "inscribir ",a.toString());
 				return true; //debido a que se pudo inscribir en materia
 			}
-			//no escribo ningun mensaje para luego realizar un mensaje detallado de todos los posibles errores.
-			//debido a no saber si a la hora de inscribirse a una materia no permiten que se inscriban en una materia ya aprobada o que esta incripto, decidi poner los metodos de validacion.
+			
 		}catch (Exception e) {
 			System.out.println("Error al inscribir" + e.getMessage());
 		}
@@ -113,16 +120,21 @@ public class Curso {
 	public void imprimirInscriptos(Integer opcion) {
 		try {
 			switch(opcion) {
-			case 1:{	Collections.sort(this.inscriptos, (s1,s2)-> s1.getNroLibreta().compareTo(s2.getNroLibreta()));
-						System.out.println(this.inscriptos);
+			case 1:{	
+						//en forma ascendente por numero de legajo
+					Collections.sort(this.inscriptos, new ComparaAlumnoPorLegajo());
+					System.out.println(this.inscriptos);
 						break;
 			}
 			case 2:{
-						Collections.sort(this.inscriptos, (s1,s2)-> s1.creditosObtenidos().compareTo(s2.creditosObtenidos()));
-						System.out.println(this.inscriptos);
+						//en forma ascendente por cantidad de creditos
+					Collections.sort(this.inscriptos, new ComparaAlumnoConCredito());
+					System.out.println(this.inscriptos);
 						break;
 			}
-			default:{ Collections.sort(this.inscriptos, new ComparaAlumnosPorNombre());
+			default:{ 
+					//en forma ascendente por nombre
+					Collections.sort(this.inscriptos, new ComparaAlumnosPorNombre());
 					System.out.println(this.inscriptos);}
 			}
 //			
@@ -132,6 +144,8 @@ public class Curso {
 		}
 	}
 	
+	
+
 	
 	//
 	

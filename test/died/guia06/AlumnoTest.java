@@ -66,5 +66,8 @@ class AlumnoTest {
 		assertEquals(esperadoCicloElectivo1,a1.cantidadCursoEnCicloElectivo(1));
 		assertEquals(esperadoCicloElectivo2,a1.cantidadCursoEnCicloElectivo(2));
 	}
-
+	
+	
+	
+	
 }
