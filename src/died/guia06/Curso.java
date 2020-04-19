@@ -1,11 +1,10 @@
 package died.guia06;
 
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-import org.junit.runners.Parameterized.Parameter;
 
 
 import died.guia06.util.Registro;
@@ -56,20 +55,6 @@ public class Curso {
 	}
 	
 
-	/**
-	 * Este método, verifica si el alumno se puede inscribir y si es así lo agrega al curso,
-	 * agrega el curso a la lista de cursos en los que está inscripto el alumno y retorna verdadero.
-	 * Caso contrario retorna falso y no agrega el alumno a la lista de inscriptos ni el curso a la lista
-	 * de cursos en los que el alumno está inscripto.
-	 * 
-	 * Para poder inscribirse un alumno debe
-	 * 		a) tener como minimo los creditos necesarios
-	 *      b) tener cupo disponibles
-	 *      c) puede estar inscripto en simultáneo a no más de 3 cursos del mismo ciclo lectivo.
-	 * @param a
-	 * @return
-	 */
-	
 
 	public Boolean inscribir(Alumno a) {
 		try {
@@ -111,12 +96,39 @@ public class Curso {
 		return false;
 	}
 	
+
 	
-	/**
-	 * 
-	 * Imprimir un curso: se debe poder imprimir el listado de inscriptos ordenados alfab�ticamente, 
-	por numero de libreta universitaria, o por cantidad de cr�ditos obtenidos.
-	 */
+	public void inscribirAlumno(Alumno a) {
+		try {
+			Boolean validarCursoAprobada = false;
+			Boolean validarCursoIncripto = false;
+			tieneCreditoRequerido(a.creditosObtenidos());
+			tieneCupos(cupo);
+			tieneCursoEnCiclo(a.cantidadCursoEnCicloElectivo(cicloLectivo));
+			for(Curso c: a.getAprobados()) {
+				if(c.getId() == this.getId())
+					validarCursoAprobada = true;
+			}
+			tieneCursoAprobada(validarCursoAprobada);
+			for(Curso c: a.getCursando()) {
+				if(c.getId() == this.getId())
+					validarCursoIncripto = true;
+			}
+			tieneCursoIncripto(validarCursoIncripto);
+			inscriptos.add(a);
+			a.inscripcionAceptada(this);
+			try {
+				log.registrar(this, "inscribir ",a.toString()); } // no se como relanzarla, pense en modificar la clase registro haciendo que el throw sea RegistroAduitoriaException pero decidi no tocar esa clase.
+			catch(IOException rae) {
+				System.out.println("No se hizo el registro" + rae.getMessage());
+			}
+			
+		}catch (InscribirException e) {
+			System.out.println("No se hizo la incripcion" + e.getMessage());
+		}
+	}
+	
+
 	public void imprimirInscriptos(Integer opcion) {
 		try {
 			switch(opcion) {
@@ -136,14 +148,33 @@ public class Curso {
 					//en forma ascendente por nombre
 					Collections.sort(this.inscriptos, new ComparaAlumnosPorNombre());
 					System.out.println(this.inscriptos);}
-			}
-//			
+			}		
 			log.registrar(this, "imprimir listado",this.inscriptos.size()+ " registros ");
 		}catch(Exception e) {
 			System.out.println ("Error al inscribir" + e.getMessage());
 		}
 	}
 	
+	//metodos de exception, cree una clase InscribirExcepcion para ordenarlo, se podia directamente usar extends Exception.
+	public void tieneCreditoRequerido(Integer credito) throws InscribirException{
+		if(credito < creditosRequeridos) throw new InscribirException("Los creditos del alumno ("+credito+") no le alcanza para inscribirse al Curso cuyo creditos requeridos son de "+creditosRequeridos+"\n");
+	}
+	
+	public void tieneCupos(Integer c) throws InscribirException{
+		if(c >= cupo) throw new InscribirException("Los cupos de la clase ("+cupo+") ya estan completos \n");
+	}
+	
+	public void tieneCursoEnCiclo(Integer curs) throws InscribirException {
+		if(curs >= 3) throw new InscribirException("La cantidad de cursos incriptos en un mismo ciclo ("+curs+") es mayor al permitido"+3+"\n");
+	}
+	
+	public void tieneCursoAprobada(Boolean valor) throws InscribirException {
+		if(valor) throw new InscribirException("El curso "+nombre+" esta aprobada \n");
+	}
+	
+	public void tieneCursoIncripto(Boolean valor) throws InscribirException{
+		if(valor) throw new InscribirException("El curso "+nombre+" esta incripto \n");
+	}
 	
 
 	
@@ -157,92 +188,60 @@ public class Curso {
 	public Integer getCicloLectivo() {
 		return cicloLectivo;
 	}
-
-
-
 	public void setCicloLectivo(Integer cicloLectivo) {
 		this.cicloLectivo = cicloLectivo;
 	}
-
-
 
 	public void setId(Integer id) {
 		this.id = id;
 	}
 
-
-
 	public String getNombre() {
 		return nombre;
 	}
-
-
 
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
 
-
-
 	public Integer getCupo() {
 		return cupo;
 	}
-
-
 
 	public void setCupo(Integer cupo) {
 		this.cupo = cupo;
 	}
 
-
-
 	public List<Alumno> getInscriptos() {
 		return inscriptos;
 	}
-
-
 
 	public void setInscriptos(List<Alumno> inscriptos) {
 		this.inscriptos = inscriptos;
 	}
 
-
-
 	public Integer getCreditos() {
 		return creditos;
 	}
-
-
 
 	public void setCreditos(Integer creditos) {
 		this.creditos = creditos;
 	}
 
-
-
 	public Integer getCreditosRequeridos() {
 		return creditosRequeridos;
 	}
-
-
 
 	public void setCreditosRequeridos(Integer creditosRequeridos) {
 		this.creditosRequeridos = creditosRequeridos;
 	}
 
-
-
 	public Registro getLog() {
 		return log;
 	}
 
-
-
 	public void setLog(Registro log) {
 		this.log = log;
 	}
-
-
-
 
 }

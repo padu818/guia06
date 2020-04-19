@@ -61,14 +61,13 @@ public class App {
 //		System.out.println(c3.getInscriptos().size()+"\n");
 //		System.out.println(c4.getInscriptos().size()+"\n");
 //		System.out.println(c5.getInscriptos().size()+"\n");
-//		System.out.println(c6.getInscriptos().size()+"\n");
-//		 
+//		System.out.println(c6.getInscriptos().size()+"\n");	 
 		
 		c1.imprimirInscriptos(1);
 		System.out.println("\n");
-		c2.imprimirInscriptos(0);//ira al default
+		c2.imprimirInscriptos(0);//ira al default en el switch
 		System.out.println("\n");
-		c3.imprimirInscriptos(-3);//ira al default
+		c3.imprimirInscriptos(-3);//ira al default en el switch
 		System.out.println("\n");
 		c4.imprimirInscriptos(2);
 		System.out.println("\n");
