@@ -47,6 +47,8 @@ public class Alumno {
 	}
 	
 	
+	
+	
 	//metodo creado para simplificar el metodo incribir de la clase CURSO
 	public Integer cantidadCursoEnCicloElectivo(Integer ciclo) {
 		Integer valor = 0;
