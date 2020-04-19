@@ -103,7 +103,7 @@ public class Curso {
 			Boolean validarCursoAprobada = false;
 			Boolean validarCursoIncripto = false;
 			tieneCreditoRequerido(a.creditosObtenidos());
-			tieneCupos(cupo);
+			tieneCupos(this.getInscriptos().size());
 			tieneCursoEnCiclo(a.cantidadCursoEnCicloElectivo(cicloLectivo));
 			for(Curso c: a.getAprobados()) {
 				if(c.getId() == this.getId())
@@ -115,16 +115,17 @@ public class Curso {
 					validarCursoIncripto = true;
 			}
 			tieneCursoIncripto(validarCursoIncripto);
-			inscriptos.add(a);
-			a.inscripcionAceptada(this);
 			try {
-				log.registrar(this, "inscribir ",a.toString()); } // no se como relanzarla, pense en modificar la clase registro haciendo que el throw sea RegistroAduitoriaException pero decidi no tocar esa clase.
+				log.registrar(this, "inscribir ",a.toString()); // no se como relanzarla, pense en modificar la clase registro haciendo que el throw sea RegistroAduitoriaException pero decidi no tocar esa clase.
+				inscriptos.add(a);
+				a.inscripcionAceptada(this);
+			}
 			catch(IOException rae) {
 				System.out.println("No se hizo el registro" + rae.getMessage());
 			}
 			
 		}catch (InscribirException e) {
-			System.out.println("No se hizo la incripcion" + e.getMessage());
+			System.out.println("No se hizo la incripcion \n" + e.getMessage());
 		}
 	}
 	
@@ -157,23 +158,23 @@ public class Curso {
 	
 	//metodos de exception, cree una clase InscribirExcepcion para ordenarlo, se podia directamente usar extends Exception.
 	public void tieneCreditoRequerido(Integer credito) throws InscribirException{
-		if(credito < creditosRequeridos) throw new InscribirException("Los creditos del alumno ("+credito+") no le alcanza para inscribirse al Curso cuyo creditos requeridos son de "+creditosRequeridos+"\n");
+		if(credito < creditosRequeridos) throw new InscribirException("Los creditos del alumno ("+credito+") no le alcanza para inscribirse al Curso cuyo creditos requeridos son de "+creditosRequeridos+".\n");
 	}
 	
 	public void tieneCupos(Integer c) throws InscribirException{
-		if(c >= cupo) throw new InscribirException("Los cupos de la clase ("+cupo+") ya estan completos \n");
+		if(c >= cupo) throw new InscribirException("Los cupos de la clase ("+cupo+") ya estan completos.\n");
 	}
 	
 	public void tieneCursoEnCiclo(Integer curs) throws InscribirException {
-		if(curs >= 3) throw new InscribirException("La cantidad de cursos incriptos en un mismo ciclo ("+curs+") es mayor al permitido"+3+"\n");
+		if(curs >= 3) throw new InscribirException("La cantidad de cursos incriptos en un mismo ciclo ("+curs+") es mayor o igual al permitido"+ 3+".\n");
 	}
 	
 	public void tieneCursoAprobada(Boolean valor) throws InscribirException {
-		if(valor) throw new InscribirException("El curso "+nombre+" esta aprobada \n");
+		if(valor) throw new InscribirException("El curso "+nombre+" esta aprobada.\n");
 	}
 	
 	public void tieneCursoIncripto(Boolean valor) throws InscribirException{
-		if(valor) throw new InscribirException("El curso "+nombre+" esta incripto \n");
+		if(valor) throw new InscribirException("El curso "+nombre+" esta incripto.\n");
 	}
 	
 
