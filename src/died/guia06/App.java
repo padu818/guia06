@@ -35,18 +35,22 @@ public class App {
 		
 		for(Alumno a:auxiliar) {
 			String materiasIncriptas = "";
-			Boolean aux = c1.inscribir(a);
-			aux = c2.inscribir(a);
-			aux = c3.inscribir(a);
-			aux = c4.inscribir(a);
-			aux = c5.inscribir(a);
-			aux = c6.inscribir(a);
+			c1.inscribirAlumno(a);
+			c2.inscribirAlumno(a);
+			c3.inscribirAlumno(a);
+			c4.inscribirAlumno(a);
+			c5.inscribirAlumno(a);
+			c6.inscribirAlumno(a);
 			for(Curso c: a.getCursando()) {
 				materiasIncriptas= materiasIncriptas + c.getNombre().toString()+"-";
 			}
 			System.out.println("El alumno "+a.getNombre()+" se inscribio en: "+materiasIncriptas+"\n");
 
 		}
+		//usare el metodo inscribirMateria a alumnos que ya estan inscriptos:
+		c5.inscribirAlumno(a6);
+		c6.inscribirAlumno(a5);
+		
 		/*
 		c1.inscribir(a1);c1.inscribir(a2);c1.inscribir(a3);c1.inscribir(a4);c1.inscribir(a6);5
 		c2.inscribir(a1);c2.inscribir(a2);2
@@ -63,16 +67,22 @@ public class App {
 //		System.out.println(c5.getInscriptos().size()+"\n");
 //		System.out.println(c6.getInscriptos().size()+"\n");	 
 		
+		System.out.println("Curso 1:");
 		c1.imprimirInscriptos(1);
 		System.out.println("\n");
+		System.out.println("Curso 2:");
 		c2.imprimirInscriptos(0);//ira al default en el switch
 		System.out.println("\n");
+		System.out.println("Curso 3:");
 		c3.imprimirInscriptos(-3);//ira al default en el switch
 		System.out.println("\n");
+		System.out.println("Curso 4:");
 		c4.imprimirInscriptos(2);
 		System.out.println("\n");
+		System.out.println("Curso 5:");
 		c5.imprimirInscriptos(2);
 		System.out.println("\n");
+		System.out.println("Curso 6:");
 		c6.imprimirInscriptos(1);
 		
 	}
