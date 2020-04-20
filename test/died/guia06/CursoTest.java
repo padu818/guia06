@@ -78,21 +78,20 @@ class CursoTest {
 	}
 	
 	
-//	@Test
-//	void testImprimirInscriptosPorLegajo() {
-//		//error en la impresion, deberia salir el alumno con numerolibreta = 1, pero sale ultimo. 
-//		//si borro el mensaje el  mismo error se desplaza al test siguiente
-//		c1.imprimirInscriptos(1);
-//	}
-//	@Test
-//	void testImprimirInscriptosPorCreditos() {
-//		c1.imprimirInscriptos(2);
-//	}
-//	@Test
-//	void testImprimirInscriptosPorNombre() {
-//		c1.imprimirInscriptos(0);
-//	}
-//	
+	@Test
+	void testImprimirInscriptosPorLegajo() {
+
+		c1.imprimirInscriptos(1);
+	}
+	@Test
+	void testImprimirInscriptosPorCreditos() {
+		c1.imprimirInscriptos(2);
+	}
+	@Test
+	void testImprimirInscriptosPorNombre() {
+		c1.imprimirInscriptos(0);
+	}
+	
 	
 	
 	@Test
