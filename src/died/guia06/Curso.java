@@ -166,7 +166,7 @@ public class Curso {
 	}
 	
 	public void tieneCursoEnCiclo(Integer curs) throws InscribirException {
-		if(curs >= 3) throw new InscribirException("La cantidad de cursos incriptos en un mismo ciclo ("+curs+") es mayor o igual al permitido"+ 3+".\n");
+		if(curs >= 3) throw new InscribirException("La cantidad de cursos incriptos en un mismo ciclo ("+curs+") es mayor o igual al permitido "+ 3+".\n");
 	}
 	
 	public void tieneCursoAprobada(Boolean valor) throws InscribirException {
